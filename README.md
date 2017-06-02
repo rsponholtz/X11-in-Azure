@@ -1,7 +1,7 @@
 # X11-in-Azure
  This process will allow you to easily use desktop/graphical applications in Azure Linux virtual machines.  Following this, you will stand up a windows server machine on the same vnet as your Linux machine, and use an X11 server running on your windows server.  I’ve used VcXsrv (https://sourceforge.net/projects/vcxsrv/), but XMing or mobaXterm would work well also.  Then you can use putty or mobaxterm to connect to the Linux machine, and use the X11 server directly.
 
-Here are some instructions to get this set up:
+Here are some instructions to get this set up with an "empty" Azure resource group.  If you already have a resource group, virtual network, etc. you can skip those steps.
 
 
 ## Create an Azure Resource Group
@@ -89,7 +89,7 @@ The Azure portal will then display and validate your options:
 
 Click "OK", and the portal will create your virtual machine. This will typically take 3-5 minutes to complete.
 
-# install VcXsrv and putty on the client machine
+# Install VcXsrv and putty on the client machine
 
 After your virtual machines have been created, go to your resource group blade, and then click on your client virtual machine:
 
@@ -110,7 +110,7 @@ Enter your credentials to conneect to your Virtual Machine.  After the connectio
 Download and install VcXsrv from `https://sourceforge.net/projects/vcxsrv/`.  
 
 
-# connect to your Linux machine and test
+# Connect to your Linux machine and test
 
 In your remote desktop session, run VxXsrv from the desktop icon or the windows start menu.  It will put an icon on your taskbar:
 
@@ -147,10 +147,10 @@ click on this, and you should get an xterm window:
 
 ![image](./media/2017-06-01_13-00-06.jpg)
 
-This shows that X11 applications are working 
+This shows that X11 applications are working.
 
 
-Finally, this all works fine for the user you log in as, but if you need to run X11 when you sudo to root, you need to fix up the xauth profile for root.  To accomplish this, I use this:
+Finally, this all works fine for the user you log in as, but if you need to run X11 when you sudo to root, you need to fix up the xauth profile for root.  To accomplish this, I use this in my root .bash_profile, obviously with your login user replacing "adminuser":
 
 ```bash
 su - adminuser -c 'xauth list' |\
